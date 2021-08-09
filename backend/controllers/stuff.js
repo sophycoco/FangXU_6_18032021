@@ -1,7 +1,7 @@
-const Thing = require('../models/Thing');
+const Thing = require('../models/thing');
 
 exports.createThing = (req, res, next) => {
-    const thingObject = JSON.parse(req.body.thing);
+    const thingObject = JSON.parse(req.body.sauce);
     delete thingObject._id;
     const thing = new Thing({
       ...thingObject,
