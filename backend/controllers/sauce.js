@@ -34,7 +34,7 @@ exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => {
       const filename = sauce.imageUrl.split("/images/")[1];
-      fs.unlink(`${filename}`, () => {
+      fs.unlink(`images/${filename}`, () => {
         Sauce.deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: "supprimé !" }))
           .catch((error) => res.status(400).json({ error }));
@@ -59,6 +59,7 @@ exports.likeDislikeSauce = (req, res, next) => {
   let like = req.body.like;
   let userId = req.body.userId;
   let sauceId = req.params.id;
+  console.log(req.body);
 
   switch (like) {
     case 1:
@@ -81,13 +82,15 @@ exports.likeDislikeSauce = (req, res, next) => {
       Sauce.findOne({ _id: sauceId })
         .then((sauce) => {
           if (sauce.usersLiked.includes(userId)) {
+            console.log("like");
             Sauce.updateOne({ _id: sauceId }, { $pull: { usersLiked: userId }, $inc: { likes: -1 } })
               .then(() => {
                 res.status(200).json({ message: "cancel" });
               })
               .catch((error) => res.status(400).json({ error }));
           }
-          if (sauce.usersDisliked.includes(userId)) {
+          else  {
+            console.log("dislike");
             Sauce.updateOne({ _id: sauceId }, { $pull: { usersDisliked: userId }, $inc: { dislikes: -1 } })
               .then(() => {
                 res.status(201).json({ message: "cancel" });
