@@ -1,17 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
-const path = require('path');
-require('dotenv').config();
+const path = require("path");
+require("dotenv").config();
 
-const sauceRoutes = require('./routes/sauce');
-const userRoutes = require('./routes/user');
+const sauceRoutes = require("./routes/sauce");
+const userRoutes = require("./routes/user");
 const { join } = require("path");
 
 const app = express();
 
 mongoose
-  .connect( process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(
+    "mongodb+srv://"+process.env.ID+":"+process.env.PASSWORD+"@cluster0.7hmxr.mongodb.net/"+
+  process.env.DATABASE+"?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
@@ -25,9 +29,9 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(helmet());
 
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.use('/api/sauces', sauceRoutes);
-app.use('/api/auth', userRoutes);
+app.use("/api/sauces", sauceRoutes);
+app.use("/api/auth", userRoutes);
 
 module.exports = app;

@@ -19,16 +19,6 @@ exports.createSauce = (req, res, next) => {
 };
 
 exports.modifySauce = (req, res, next) => {
-  /*const sauceObject = req.file
-    ? {
-        ...JSON.parse(req.body.sauce),
-        imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-      }
-    : { ...req.body };
-  Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "modifié " }))
-    .catch((error) => res.status(403).json({ error }));*/
-
     const sauceId = req.params.id;
     if (req.file) {
         Sauce.findOne({ _id: req.params.id})
