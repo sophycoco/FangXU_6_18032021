@@ -1,4 +1,4 @@
-OpenClassrooms Web Developer Project 6 -- To build a secure API
+# OpenClassrooms Web Developer Project 6 -- To build a secure API
 
 A secure API for a rating application:
 Use Node.js, Express, and MongoDB technologies to build the NoSQL database.
